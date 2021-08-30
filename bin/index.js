@@ -18,7 +18,7 @@ function main(args) {
     const logger = logger_1.getLogger(args.verbose);
     const barrelName = barrelName_1.getBarrelName(args.name, logger);
     const directories = args.directory || ["./"];
-    directories.forEach((directory) => {
+    directories.forEach(directory => {
         const rootPath = rootPath_1.resolveRootPath(directory);
         const baseUrl = baseUrl_1.getCombinedBaseUrl(rootPath, args.baseUrl);
         // Build the directory tree.
