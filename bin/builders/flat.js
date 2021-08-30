@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.buildFlatBarrel = void 0;
 const builder_1 = require("../builder");
 function buildFlatBarrel(directory, modules, quoteCharacter, semicolonCharacter, logger, baseUrl, exportDefault) {
     return modules.reduce((previous, current) => {

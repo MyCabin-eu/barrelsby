@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.loadDirectoryModules = void 0;
 const utilities_1 = require("./utilities");
 // Get any typescript modules contained at any depth in the current directory.
 function getModules(directory, logger, local) {
@@ -17,7 +18,8 @@ function getModules(directory, logger, local) {
         });
     }
     // Only return files that look like TypeScript modules.
-    return files.filter((file) => file.name.match(utilities_1.isTypeScriptFile));
+    logger(`All Files ${files}`);
+    return files.filter((file) => file.name.match(utilities_1.isSVGFile));
 }
 function buildFilters(include, exclude) {
     // Filter a set of modules down to those matching the include/exclude rules.
