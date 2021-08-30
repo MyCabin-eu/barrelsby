@@ -1,5 +1,5 @@
 import { Logger } from "./options/logger";
-import { Directory, isSVGFile, isTypeScriptFile, Location } from "./utilities";
+import { Directory, isTypeScriptFile, Location } from "./utilities";
 
 interface Filters {
   blacklists: RegExp[];
@@ -26,7 +26,7 @@ function getModules(
     });
   }
   // Only return files that look like TypeScript modules.
-  return files.filter((file: Location) => file.name.match(isSVGFile));
+  return files.filter((file: Location) => file.name.match(isTypeScriptFile));
 }
 
 function buildFilters(include: string[], exclude: string[]): Filters {
