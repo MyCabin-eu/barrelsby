@@ -4,7 +4,6 @@ import { Logger } from "../options/logger";
 import { SemicolonCharacter } from "../options/noSemicolon";
 import { QuoteCharacter } from "../options/quoteCharacter";
 import { Directory, Location } from "../utilities";
-import path from "path";
 
 export function buildFlatBarrel(
   directory: Directory,
