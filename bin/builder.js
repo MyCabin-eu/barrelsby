@@ -82,6 +82,7 @@ function getBasename(relativePath) {
         }
     });
     // Return whichever path is shorter. If they're the same length then nothing was stripped.
+    mayBePath = mayBePath.split(".")[0];
     return mayBePath;
 }
 exports.getBasename = getBasename;
