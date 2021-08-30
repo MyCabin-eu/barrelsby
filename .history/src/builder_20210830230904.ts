@@ -83,8 +83,7 @@ function buildBarrel(
     semicolonCharacter,
     logger,
     baseUrl,
-    exportDefault,
-    allowAllFiletypes
+    exportDefault
   );
   const destination = path.join(directory.path, barrelName);
   if (content.length === 0) {
@@ -115,7 +114,7 @@ export type BarrelBuilder = (
   logger: Logger,
   baseUrl: BaseUrl,
   exportDefault: boolean,
-  allowAllFiletypes: boolean
+  allowAllFiletypes?: boolean
 ) => string;
 
 /** Builds the TypeScript */

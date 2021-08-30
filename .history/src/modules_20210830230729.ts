@@ -23,7 +23,7 @@ function getModules(
   if (!local) {
     directory.directories.forEach((childDirectory: Directory) => {
       // Recurse.
-      files.push(...getModules(childDirectory, logger, local, allowAllFiletypes));
+      files.push(...getModules(childDirectory, logger, local));
     });
   }
   // Only return files that look like TypeScript modules.
@@ -79,10 +79,9 @@ export function loadDirectoryModules(
   logger: Logger,
   include: string[],
   exclude: string[],
-  local: boolean,
-  allowAllFiletypes: boolean
+  local: boolean
 ): Location[] {
-  const modules = getModules(directory, logger, local, allowAllFiletypes);
+  const modules = getModules(directory, logger, local);
 
   const filters = buildFilters(include, exclude);
 

@@ -20,5 +20,4 @@ export interface Arguments {
   structure?: StructureOption;
   version?: boolean;
   verbose?: boolean;
-  allowAllFiletypes?: boolean;
 }

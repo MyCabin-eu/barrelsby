@@ -23,7 +23,7 @@ function getModules(
   if (!local) {
     directory.directories.forEach((childDirectory: Directory) => {
       // Recurse.
-      files.push(...getModules(childDirectory, logger, local, allowAllFiletypes));
+      files.push(...getModules(childDirectory, logger, local));
     });
   }
   // Only return files that look like TypeScript modules.

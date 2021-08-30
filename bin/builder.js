@@ -11,7 +11,7 @@ const flat_1 = require("./builders/flat");
 const header_1 = require("./builders/header");
 const modules_1 = require("./modules");
 const utilities_1 = require("./utilities");
-function buildBarrels(destinations, quoteCharacter, semicolonCharacter, barrelName, logger, baseUrl, exportDefault, structure, local, include, exclude) {
+function buildBarrels(destinations, quoteCharacter, semicolonCharacter, barrelName, logger, baseUrl, exportDefault, structure, local, include, exclude, allowAllFiletypes) {
     let builder;
     switch (structure) {
         default:
@@ -23,13 +23,13 @@ function buildBarrels(destinations, quoteCharacter, semicolonCharacter, barrelNa
             break;
     }
     // Build the barrels.
-    destinations.forEach((destination) => buildBarrel(destination, builder, quoteCharacter, semicolonCharacter, barrelName, logger, baseUrl, exportDefault, local, include, exclude));
+    destinations.forEach((destination) => buildBarrel(destination, builder, quoteCharacter, semicolonCharacter, barrelName, logger, baseUrl, exportDefault, local, include, exclude, allowAllFiletypes));
 }
 exports.buildBarrels = buildBarrels;
 // Build a barrel for the specified directory.
-function buildBarrel(directory, builder, quoteCharacter, semicolonCharacter, barrelName, logger, baseUrl, exportDefault, local, include, exclude) {
+function buildBarrel(directory, builder, quoteCharacter, semicolonCharacter, barrelName, logger, baseUrl, exportDefault, local, include, exclude, allowAllFiletypes) {
     logger(`Building barrel @ ${directory.path}`);
-    const content = builder(directory, modules_1.loadDirectoryModules(directory, logger, include, exclude, local), quoteCharacter, semicolonCharacter, logger, baseUrl, exportDefault);
+    const content = builder(directory, modules_1.loadDirectoryModules(directory, logger, include, exclude, local, allowAllFiletypes), quoteCharacter, semicolonCharacter, logger, baseUrl, exportDefault, allowAllFiletypes);
     const destination = path_1.default.join(directory.path, barrelName);
     if (content.length === 0) {
         // Skip empty barrels.
@@ -51,7 +51,7 @@ function buildBarrel(directory, builder, quoteCharacter, semicolonCharacter, bar
     }
 }
 /** Builds the TypeScript */
-function buildImportPath(directory, target, baseUrl) {
+function buildImportPath(directory, target, baseUrl, allowAllFiletypes) {
     // If the base URL option is set then imports should be relative to there.
     const startLocation = baseUrl ? baseUrl : directory.path;
     const relativePath = path_1.default.relative(startLocation, target.path);
@@ -61,7 +61,7 @@ function buildImportPath(directory, target, baseUrl) {
         directoryPath = `.${path_1.default.sep}${directoryPath}`;
     }
     // Strip off the .ts or .tsx from the file name.
-    const fileName = getBasename(relativePath);
+    const fileName = getBasename(relativePath, !!allowAllFiletypes);
     // Build the final path string. Use posix-style seperators.
     const location = `${directoryPath}${path_1.default.sep}${fileName}`;
     const convertedLocation = utilities_1.convertPathSeparator(location);
@@ -72,7 +72,7 @@ function stripThisDirectory(location, baseUrl) {
     return baseUrl ? location.replace(utilities_1.thisDirectory, "") : location;
 }
 /** Strips the .ts or .tsx file extension from a path and returns the base filename. */
-function getBasename(relativePath) {
+function getBasename(relativePath, allowAllFiletypes) {
     const mayBeSuffix = [".ts", ".tsx", ".d.ts"];
     let mayBePath = relativePath;
     mayBeSuffix.map(suffix => {
@@ -82,6 +82,8 @@ function getBasename(relativePath) {
         }
     });
     // Return whichever path is shorter. If they're the same length then nothing was stripped.
+    if (allowAllFiletypes)
+        mayBePath = mayBePath.split(".")[0];
     return mayBePath;
 }
 exports.getBasename = getBasename;

@@ -61,8 +61,7 @@ function main(args: Arguments) {
       args.structure,
       !!args.local,
       ([] as string[]).concat(args.include || []),
-      ([] as string[]).concat(args.exclude || []),
-      !!args.allowAllFiletypes,
+      ([] as string[]).concat(args.exclude || [])
     );
   });
 }

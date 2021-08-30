@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.loadDirectoryModules = void 0;
 const utilities_1 = require("./utilities");
 // Get any typescript modules contained at any depth in the current directory.
-function getModules(directory, logger, local) {
+function getModules(directory, logger, local, allowAllFiletypes) {
     logger(`Getting modules @ ${directory.path}`);
     if (directory.barrel) {
         // If theres a barrel then use that as it *should* contain descendant modules.
@@ -14,12 +14,14 @@ function getModules(directory, logger, local) {
     if (!local) {
         directory.directories.forEach((childDirectory) => {
             // Recurse.
-            files.push(...getModules(childDirectory, logger, local));
+            files.push(...getModules(childDirectory, logger, local, allowAllFiletypes));
         });
     }
     // Only return files that look like TypeScript modules.
     logger(`All Files ${files}`);
-    return files.filter((file) => file.name.match(utilities_1.isSVGFile));
+    if (allowAllFiletypes)
+        return files;
+    return files.filter((file) => file.name.match(utilities_1.isTypeScriptFile));
 }
 function buildFilters(include, exclude) {
     // Filter a set of modules down to those matching the include/exclude rules.
@@ -57,8 +59,8 @@ function filterModules(filters, locations, logger) {
     }
     return result;
 }
-function loadDirectoryModules(directory, logger, include, exclude, local) {
-    const modules = getModules(directory, logger, local);
+function loadDirectoryModules(directory, logger, include, exclude, local, allowAllFiletypes) {
+    const modules = getModules(directory, logger, local, allowAllFiletypes);
     const filters = buildFilters(include, exclude);
     return filterModules(filters, modules, logger);
 }

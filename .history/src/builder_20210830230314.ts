@@ -55,7 +55,6 @@ export function buildBarrels(
       local,
       include,
       exclude,
-      allowAllFiletypes
     )
   );
 }
@@ -72,19 +71,17 @@ function buildBarrel(
   exportDefault: boolean,
   local: boolean,
   include: string[],
-  exclude: string[],
-  allowAllFiletypes: boolean
+  exclude: string[]
 ) {
   logger(`Building barrel @ ${directory.path}`);
   const content = builder(
     directory,
-    loadDirectoryModules(directory, logger, include, exclude, local, allowAllFiletypes),
+    loadDirectoryModules(directory, logger, include, exclude, local),
     quoteCharacter,
     semicolonCharacter,
     logger,
     baseUrl,
-    exportDefault,
-    allowAllFiletypes
+    exportDefault
   );
   const destination = path.join(directory.path, barrelName);
   if (content.length === 0) {
@@ -114,16 +111,14 @@ export type BarrelBuilder = (
   semicolonCharacter: SemicolonCharacter,
   logger: Logger,
   baseUrl: BaseUrl,
-  exportDefault: boolean,
-  allowAllFiletypes: boolean
+  exportDefault: boolean
 ) => string;
 
 /** Builds the TypeScript */
 export function buildImportPath(
   directory: Directory,
   target: Location,
-  baseUrl: BaseUrl,
-  allowAllFiletypes?: boolean
+  baseUrl: BaseUrl
 ): string {
   // If the base URL option is set then imports should be relative to there.
   const startLocation = baseUrl ? baseUrl : directory.path;
@@ -134,7 +129,7 @@ export function buildImportPath(
     directoryPath = `.${path.sep}${directoryPath}`;
   }
   // Strip off the .ts or .tsx from the file name.
-  const fileName = getBasename(relativePath, !!allowAllFiletypes);
+  const fileName = getBasename(relativePath);
   // Build the final path string. Use posix-style seperators.
   const location = `${directoryPath}${path.sep}${fileName}`;
   const convertedLocation = convertPathSeparator(location);
@@ -156,6 +151,6 @@ export function getBasename(relativePath: string, allowAllFiletypes: boolean) {
     }
   });
   // Return whichever path is shorter. If they're the same length then nothing was stripped.
-  if (allowAllFiletypes) mayBePath = mayBePath.split(".")[0]
+  if 
   return mayBePath;
 }

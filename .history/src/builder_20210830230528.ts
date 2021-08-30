@@ -55,7 +55,6 @@ export function buildBarrels(
       local,
       include,
       exclude,
-      allowAllFiletypes
     )
   );
 }
@@ -72,19 +71,17 @@ function buildBarrel(
   exportDefault: boolean,
   local: boolean,
   include: string[],
-  exclude: string[],
-  allowAllFiletypes: boolean
+  exclude: string[]
 ) {
   logger(`Building barrel @ ${directory.path}`);
   const content = builder(
     directory,
-    loadDirectoryModules(directory, logger, include, exclude, local, allowAllFiletypes),
+    loadDirectoryModules(directory, logger, include, exclude, local),
     quoteCharacter,
     semicolonCharacter,
     logger,
     baseUrl,
-    exportDefault,
-    allowAllFiletypes
+    exportDefault
   );
   const destination = path.join(directory.path, barrelName);
   if (content.length === 0) {
@@ -114,8 +111,7 @@ export type BarrelBuilder = (
   semicolonCharacter: SemicolonCharacter,
   logger: Logger,
   baseUrl: BaseUrl,
-  exportDefault: boolean,
-  allowAllFiletypes: boolean
+  exportDefault: boolean
 ) => string;
 
 /** Builds the TypeScript */
