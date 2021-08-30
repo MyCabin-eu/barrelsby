@@ -7,12 +7,13 @@ function buildFlatBarrel(directory, modules, quoteCharacter, semicolonCharacter,
         const importPath = builder_1.buildImportPath(directory, current, baseUrl);
         logger(`Including path ${importPath}`);
         if (exportDefault) {
-            const filename = builder_1.getBasename(current.path);
+            const filename = current.path.split(".")[0];
             previous += `export { default as ${filename} } from ${quoteCharacter}${importPath}${quoteCharacter}${semicolonCharacter}
 `;
         }
-        return (previous += `export * from ${quoteCharacter}${importPath}${quoteCharacter}${semicolonCharacter}
-`);
+        return previous;
+        // return (previous += `export * from ${quoteCharacter}${importPath}${quoteCharacter}${semicolonCharacter}
+        // `);
     }, "");
 }
 exports.buildFlatBarrel = buildFlatBarrel;
