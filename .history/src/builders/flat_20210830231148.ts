@@ -18,13 +18,11 @@ export function buildFlatBarrel(
     const importPath = buildImportPath(directory, current, baseUrl);
     logger(`Including path ${importPath}`);
     if (exportDefault) {
-      const filename = current.path.split(".")[0]
-
+      const filename = getBasename(current.path);
       previous += `export { default as ${filename} } from ${quoteCharacter}${importPath}${quoteCharacter}${semicolonCharacter}
 `;
     }
-    return previous;
-    // return (previous += `export * from ${quoteCharacter}${importPath}${quoteCharacter}${semicolonCharacter}
-    // `);
+    return (previous += `export * from ${quoteCharacter}${importPath}${quoteCharacter}${semicolonCharacter}
+`);
   }, "");
 }

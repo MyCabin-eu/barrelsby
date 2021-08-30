@@ -23,8 +23,7 @@ export function buildFlatBarrel(
       previous += `export { default as ${filename} } from ${quoteCharacter}${importPath}${quoteCharacter}${semicolonCharacter}
 `;
     }
-    return previous;
-    // return (previous += `export * from ${quoteCharacter}${importPath}${quoteCharacter}${semicolonCharacter}
-    // `);
+    return (previous += `export * from ${quoteCharacter}${importPath}${quoteCharacter}${semicolonCharacter}
+`);
   }, "");
 }
