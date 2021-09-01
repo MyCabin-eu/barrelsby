@@ -12,7 +12,7 @@ function buildFlatBarrel(directory, modules, quoteCharacter, semicolonCharacter,
         logger(`Including path ${importPath}`);
         if (exportDefault) {
             const filename = path_1.default.basename(current.path).split(".")[0];
-            previous += `export { default as ${filename} } from ${quoteCharacter}${importPath}${quoteCharacter}${semicolonCharacter}
+            previous += `export { default as Icon${filename} } from ${quoteCharacter}${importPath}${quoteCharacter}${semicolonCharacter}
 `;
         }
         return previous;
