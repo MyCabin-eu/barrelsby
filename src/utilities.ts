@@ -22,7 +22,7 @@ export function convertPathSeparator(path: string): string {
 }
 
 export const isTypeScriptFile = /\.tsx?$/m;
-export const isSVGFile = /\.svg?$/m;
+export const isSVGFile = /\.svg?$|\.SVG?$/m;
 export const nonAlphaNumeric = /\W+/g;
 export const thisDirectory = /^\.[\\\/]/g;
 export const indentation = "  ";
