@@ -16,6 +16,8 @@ export interface Directory extends Location {
 }
 /** Convert path separator from windows to unix */
 export declare function convertPathSeparator(path: string): string;
+/** transform file extension (.SVG) to lowercase */
+export declare function convertFileExtensionToLowercase(path: string): string;
 export declare const isTypeScriptFile: RegExp;
 export declare const isSVGFile: RegExp;
 export declare const nonAlphaNumeric: RegExp;

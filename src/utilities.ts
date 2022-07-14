@@ -20,6 +20,10 @@ export interface Directory extends Location {
 export function convertPathSeparator(path: string): string {
   return path.replace(/\\+/g, "/");
 }
+/** transform file extension (.SVG) to lowercase */
+export function convertFileExtensionToLowercase(path: string): string {
+  return path.replace(/\.SVG+/g, ".svg")
+}
 
 export const isTypeScriptFile = /\.tsx?$/m;
 export const isSVGFile = /\.svg?$|\.SVG?$/m;

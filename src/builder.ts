@@ -11,6 +11,7 @@ import { SemicolonCharacter } from "./options/noSemicolon";
 import { StructureOption } from "./options/options";
 import { QuoteCharacter } from "./options/quoteCharacter";
 import {
+  convertFileExtensionToLowercase,
   convertPathSeparator,
   Directory,
   Location,
@@ -128,7 +129,7 @@ export function buildImportPath(
     directoryPath = `.${path.sep}${directoryPath}`;
   }
   // Strip off the .ts or .tsx from the file name.
-  const fileName = getBasename(relativePath);
+  const fileName = convertFileExtensionToLowercase(getBasename(relativePath));
   // Build the final path string. Use posix-style seperators.
   const location = `${directoryPath}${path.sep}${fileName}`;
   const convertedLocation = convertPathSeparator(location);

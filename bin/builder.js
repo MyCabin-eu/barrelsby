@@ -60,7 +60,7 @@ function buildImportPath(directory, target, baseUrl) {
         directoryPath = `.${path_1.default.sep}${directoryPath}`;
     }
     // Strip off the .ts or .tsx from the file name.
-    const fileName = getBasename(relativePath);
+    const fileName = utilities_1.convertFileExtensionToLowercase(getBasename(relativePath));
     // Build the final path string. Use posix-style seperators.
     const location = `${directoryPath}${path_1.default.sep}${fileName}`;
     const convertedLocation = utilities_1.convertPathSeparator(location);
